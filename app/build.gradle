@@ -1,0 +1,115 @@
+apply plugin: 'com.android.application'
+
+android {
+
+    compileSdkVersion 25
+    buildToolsVersion "25.0.3"
+    defaultConfig {
+        applicationId "com.yibaitaoke.x.taobaoke"
+        minSdkVersion 15
+        targetSdkVersion 25
+        versionCode 1
+        versionName "1.0"
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        multiDexEnabled true
+
+    }
+
+
+    signingConfigs {
+        release {
+            keyAlias 'yibaitaoke'
+            keyPassword '123456'
+            storeFile file('/Users/x/Desktop/WorkSpace/GitHub/TaobaoKe/app/yibaitaoke.jks')
+            storePassword '123456'
+        }
+        debug {
+            keyAlias 'yibaitaoke'
+            keyPassword '123456'
+            storeFile file('/Users/x/Desktop/WorkSpace/GitHub/TaobaoKe/app/yibaitaoke.jks')
+            storePassword '123456'
+        }
+    }
+
+    buildTypes {
+
+        release {
+            minifyEnabled true
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+
+    packagingOptions {
+        exclude 'META-INF/DEPENDENCIES'
+        exclude 'META-INF/NOTICE'
+        exclude 'META-INF/LICENSE'
+        exclude 'META-INF/LICENSE.txt'
+        exclude 'META-INF/NOTICE.txt'
+    }
+
+    dexOptions {
+        javaMaxHeapSize "3g"
+        incremental true
+    }
+
+}
+
+dependencies {
+    compile fileTree(include: ['*.jar'], dir: 'libs')
+    androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
+        exclude group: 'com.android.support', module: 'support-annotations'
+    })
+    compile 'com.android.support:multidex:1.0.1'
+    compile 'com.android.support:appcompat-v7:25.3.1'
+    compile 'com.android.support:support-v4:25.3.1'
+    compile 'com.android.support:design:25.3.1'
+    compile 'com.android.support.constraint:constraint-layout:1.0.2'
+    testCompile 'junit:junit:4.12'
+    compile 'com.squareup.okhttp3:okhttp:3.4.1'
+    compile 'com.squareup.okhttp3:logging-interceptor:3.1.2'
+    //打印log的依赖包
+    compile 'com.squareup.retrofit2:retrofit:2.1.0'
+    compile 'com.squareup.retrofit2:converter-gson:2.1.0'
+    compile 'com.squareup.retrofit2:converter-scalars:2.1.0'
+    //ConverterFactory的String依赖包
+    compile 'com.squareup.retrofit2:adapter-rxjava:2.1.0'
+    compile 'com.google.code.gson:gson:2.7'
+    compile 'io.reactivex:rxandroid:1.2.1'
+    compile 'com.bigkoo:alertview:1.0.3'
+    compile 'com.bigkoo:svprogresshud:1.0.6'
+    compile 'com.github.xpf0000:X-Cache-Android:1.0.3'
+    compile 'org.greenrobot:eventbus:3.0.0'
+
+    compile 'com.makeramen:roundedimageview:2.2.1'
+
+
+    compile files('libs/universal-image-loader-1.9.5.jar')
+    //fastjson
+    compile(name: 'fastjson-1.2.9', ext: 'jar')
+    //支付
+    compile(name: 'alipaySingle-20160825', ext: 'jar')
+    //登陆
+    compile(name: 'alibabauth_core-1.1.4', ext: 'jar')
+    compile(name: 'alibabauth_ui-1.1.4', ext: 'aar')
+    compile(name: 'alibabauth_ext-1.1.4', ext: 'jar')
+    //【可选】仅供特殊合作伙伴使用
+    compile(name: 'alibabauth_accountlink-1.1.4', ext: 'jar')
+    //安全基础
+    compile(name: 'securityguardaar3-5.1.81', ext: 'aar')
+    //【可选】安全高级，如使用了发放红包、优惠券高级功能，则必须引入
+    compile(name: 'securitybodyaar3-5.1.25', ext: 'aar')
+    //Mtop网关
+    compile(name: 'mtopsdk_allinone_open-1.2.2.4', ext: 'jar')
+
+    //applink
+    compile(name: 'alibc_link_partner-1.1.0.0', ext: 'aar')
+
+
+    //UT
+    compile(name: 'utdid4all-1.1.5.3_proguard', ext: 'jar')
+    compile(name: 'app-monitor-sdk-2.5.1.3_for_bc_proguard', ext: 'jar')
+    //电商SDK
+    compile(name: 'alibc_trade_sdk-3.1.1.105', ext: 'aar')
+    compile 'com.alibaba.sdk.android:alibc_trade_common:3.1.1.105'
+    compile 'com.alibaba.sdk.android:alibc_trade_biz:3.1.1.105'
+}

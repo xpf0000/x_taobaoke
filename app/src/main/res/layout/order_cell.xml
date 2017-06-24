@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/white"
+    android:orientation="horizontal"
+    android:paddingBottom="12dp"
+    android:paddingLeft="5dp"
+    android:paddingRight="8dp"
+    android:paddingTop="12dp"
+    >
+
+    <ImageView
+        android:id="@+id/order_cell_img"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:padding="5dp"
+        android:scaleType="centerCrop"
+        android:layout_marginRight="10dp"
+        />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            >
+
+            <ImageView
+                android:id="@+id/is_cat"
+                android:layout_width="15dp"
+                android:layout_height="15dp"
+                android:src="@mipmap/cat"
+                />
+
+            <TextView
+                android:id="@+id/order_cell_name"
+                android:layout_weight="1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:lines="1"
+                android:ellipsize="end"
+                android:padding="3dp"
+                android:text="截止日期：2015-03-12asdfasdfasdfasd"
+                android:textSize="15sp"
+                android:textColor="#666666"
+                />
+
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:layout_marginTop="5dp"
+            >
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:lines="1"
+                android:padding="3dp"
+                android:textColor="@color/gray"
+                android:text="现价"
+                android:textSize="13sp"
+                />
+
+            <TextView
+                android:id="@+id/order_cell_price"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:lines="1"
+                android:padding="3dp"
+                android:textColor="@color/gray"
+                android:text="￥2.69"
+                android:textSize="13sp"
+                />
+
+
+            <TextView
+                android:id="@+id/order_cell_salenum"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:lines="1"
+                android:padding="3dp"
+                android:textColor="@color/gray"
+                android:text="已售2632件"
+                android:textSize="13sp"
+                android:layout_marginLeft="40dp"
+                />
+
+
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="bottom"
+            android:layout_marginTop="10dp"
+            >
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="折扣价"
+                android:textSize="13sp"
+                android:padding="3dp"
+                android:layout_marginLeft="2dp"
+                android:textColor="@color/gray"
+
+                />
+
+            <TextView
+                android:id="@+id/order_cell_cprice"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="￥1.69"
+                android:textSize="18sp"
+                android:padding="3dp"
+                android:layout_marginLeft="2dp"
+                android:textColor="#333333"
+                />
+
+
+
+
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+
+</LinearLayout>

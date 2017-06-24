@@ -1,0 +1,231 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#ffffff"
+    android:clickable="true"
+    >
+
+   <ScrollView
+       android:layout_width="match_parent"
+       android:layout_height="match_parent"
+       android:paddingBottom="50dp"
+       >
+
+
+       <LinearLayout
+           android:layout_width="match_parent"
+           android:layout_height="match_parent"
+           android:padding="12dp"
+           android:orientation="vertical"
+           >
+
+           <TextView
+               android:id="@+id/home_order"
+               android:layout_width="match_parent"
+               android:layout_height="wrap_content"
+               android:text="默认排序"
+               android:textAlignment="center"
+               android:background="#585c64"
+               android:textColor="#ffffff"
+               android:padding="10dp"
+               android:drawableRight="@mipmap/down_2"
+               android:gravity="center"
+               android:clickable="true"
+               android:onClick="set_order"
+               />
+
+           <LinearLayout
+               android:layout_width="match_parent"
+               android:layout_height="wrap_content"
+               android:orientation="horizontal"
+               android:layout_marginTop="15dp"
+               android:gravity="center_vertical"
+               >
+
+               <TextView
+                   android:layout_width="wrap_content"
+                   android:layout_height="wrap_content"
+                   android:text="淘宝"
+                   android:textColor="#575c64"
+                   android:textSize="16sp"
+                   />
+
+               <CheckBox
+                   android:id="@+id/home_taobao"
+                   android:layout_width="30dp"
+                   android:layout_height="30dp"
+                   android:layout_marginLeft="10dp"
+                   android:button="@drawable/check_box" />
+
+
+           </LinearLayout>
+
+           <LinearLayout
+               android:layout_width="match_parent"
+               android:layout_height="wrap_content"
+               android:orientation="horizontal"
+               android:layout_marginTop="15dp"
+               android:gravity="center_vertical"
+               >
+
+               <TextView
+                   android:layout_width="wrap_content"
+                   android:layout_height="wrap_content"
+                   android:text="天猫"
+                   android:textColor="#575c64"
+                   android:textSize="16sp"
+                   />
+
+               <CheckBox
+                   android:id="@+id/home_tianmao"
+                   android:layout_width="30dp"
+                   android:layout_height="30dp"
+                   android:layout_marginLeft="10dp"
+                   android:button="@drawable/check_box" />
+
+
+           </LinearLayout>
+
+
+           <LinearLayout
+               android:layout_width="match_parent"
+               android:layout_height="wrap_content"
+               android:orientation="horizontal"
+               android:layout_marginTop="18dp"
+               android:gravity="center_vertical"
+               >
+
+               <TextView
+                   android:layout_width="wrap_content"
+                   android:layout_height="wrap_content"
+                   android:text="价格"
+                   android:textColor="#575c64"
+                   android:textSize="16sp"
+                   />
+
+               <EditText
+                   android:id="@+id/home_minprice"
+                   android:layout_width="match_parent"
+                   android:layout_height="wrap_content"
+                   android:background="@drawable/price_et"
+                   android:padding="4dp"
+                   android:layout_weight="1"
+                   android:layout_marginLeft="5dp"
+                   android:layout_marginRight="5dp"
+                   android:lines="1"
+                   android:inputType="numberDecimal"
+                   />
+
+               <TextView
+                   android:layout_width="wrap_content"
+                   android:layout_height="wrap_content"
+                   android:text="元 - "
+                   android:textColor="#575c64"
+                   android:textSize="16sp"
+                   />
+
+               <EditText
+                   android:id="@+id/home_maxprice"
+                   android:layout_width="match_parent"
+                   android:layout_height="wrap_content"
+                   android:background="@drawable/price_et"
+                   android:padding="4dp"
+                   android:layout_weight="1"
+                   android:layout_marginLeft="5dp"
+                   android:layout_marginRight="5dp"
+                   android:lines="1"
+                   android:inputType="numberDecimal"
+                   />
+
+               <TextView
+                   android:layout_width="wrap_content"
+                   android:layout_height="wrap_content"
+                   android:text="元"
+                   android:textColor="#575c64"
+                   android:textSize="16sp"
+                   />
+
+
+           </LinearLayout>
+
+
+           <LinearLayout
+               android:layout_width="match_parent"
+               android:layout_height="wrap_content"
+               android:orientation="horizontal"
+               android:layout_marginTop="20dp"
+               android:gravity="center_vertical"
+               >
+
+               <TextView
+                   android:layout_width="wrap_content"
+                   android:layout_height="wrap_content"
+                   android:text="佣金"
+                   android:textColor="#575c64"
+                   android:textSize="16sp"
+                   />
+
+               <EditText
+                   android:id="@+id/home_minyongjin"
+                   android:layout_width="match_parent"
+                   android:layout_height="wrap_content"
+                   android:background="@drawable/price_et"
+                   android:padding="4dp"
+                   android:layout_weight="1"
+                   android:layout_marginLeft="5dp"
+                   android:layout_marginRight="5dp"
+                   android:lines="1"
+                   android:inputType="numberDecimal"
+                   />
+
+               <TextView
+                   android:layout_width="wrap_content"
+                   android:layout_height="wrap_content"
+                   android:text="% - "
+                   android:textColor="#575c64"
+                   android:textSize="16sp"
+                   />
+
+               <EditText
+                   android:id="@+id/home_maxyongjin"
+                   android:layout_width="match_parent"
+                   android:layout_height="wrap_content"
+                   android:background="@drawable/price_et"
+                   android:padding="4dp"
+                   android:layout_weight="1"
+                   android:layout_marginLeft="5dp"
+                   android:layout_marginRight="5dp"
+                   android:lines="1"
+                   android:inputType="numberDecimal"
+                   />
+
+               <TextView
+                   android:layout_width="wrap_content"
+                   android:layout_height="wrap_content"
+                   android:text="%"
+                   android:textColor="#575c64"
+                   android:textSize="16sp"
+                   />
+
+
+           </LinearLayout>
+
+       </LinearLayout>
+
+
+   </ScrollView>
+
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@color/app_basic"
+        android:layout_alignParentBottom="true"
+        android:text="确定"
+        android:textColor="#ffffff"
+        android:textSize="18sp"
+        android:onClick="do_submit"
+        />
+
+</RelativeLayout>

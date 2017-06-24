@@ -1,0 +1,323 @@
+package net;
+
+import android.widget.Toast;
+
+import rx.Observable;
+import rx.Subscriber;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.functions.Func1;
+import rx.schedulers.Schedulers;
+import util.ApplicationClass;
+
+/**
+ * Created by X on 2016/10/1.
+ */
+
+public class XNetUtil {
+
+    static public boolean debug = true;
+
+    public interface OnHttpResult<T>
+    {
+        void onError(Throwable e);
+        void onSuccess(T t);
+
+    }
+
+    final static public <T> void APPPrintln(T t)
+    {
+        if(debug)
+        {
+            System.out.println(t);
+        }
+
+    }
+
+    public static <T> void Handle(Observable<HttpResult<T>> obj, Subscriber<T> res) {
+
+        obj
+                .subscribeOn(Schedulers.newThread())
+                .observeOn(AndroidSchedulers.mainThread())
+                .map(new HttpResultFunc<T>())
+                .subscribe(res);
+
+    }
+
+    public static <T> void HandleReturnAll(Observable<HttpResult<T>> obj, final OnHttpResult<HttpResult<T>> res) {
+        obj
+                .subscribeOn(Schedulers.newThread())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Subscriber<HttpResult<T>>() {
+                    @Override
+                    public void onCompleted() {
+
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+
+                        if(debug)
+                        {
+                            e.printStackTrace();
+                            Toast.makeText(ApplicationClass.context, e.toString(), Toast.LENGTH_SHORT).show();
+                        }
+                        else
+                        {
+                            XActivityindicator.showToast("");
+                        }
+                        res.onError(e);
+
+                    }
+
+                    @Override
+                    public void onNext(HttpResult<T> tHttpResult) {
+                        res.onSuccess(tHttpResult);
+                    }
+                });
+
+    }
+
+
+    public static <T> void Handle(Observable<HttpResult<T>> obj, final OnHttpResult<T> res) {
+        obj
+                .subscribeOn(Schedulers.newThread())
+                .observeOn(AndroidSchedulers.mainThread())
+                .map(new HttpResultFunc<T>())
+                .subscribe(new Subscriber<T>() {
+                    @Override
+                    public void onCompleted() {
+
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        if(debug)
+                        {
+                            e.printStackTrace();
+                            Toast.makeText(ApplicationClass.context, e.toString(), Toast.LENGTH_SHORT).show();
+                        }
+                        else
+                        {
+                            XActivityindicator.showToast("");
+                        }
+                        res.onError(e);
+
+                    }
+
+                    @Override
+                    public void onNext(T t) {
+                        res.onSuccess(t);
+                    }
+                });
+
+    }
+
+
+    public static <T> void Handle(Observable<HttpResult<T>> obj, String success, String fail, final OnHttpResult<Boolean> res) {
+
+        obj
+                .subscribeOn(Schedulers.newThread())
+                .observeOn(AndroidSchedulers.mainThread())
+                .map(new HttpResultFuncBool<T>(success,fail))
+                .subscribe(new Subscriber<Boolean>() {
+                    @Override
+                    public void onCompleted() {
+
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        XActivityindicator.hide();
+                        if(debug)
+                        {
+                            e.printStackTrace();
+                            Toast.makeText(ApplicationClass.context, e.toString(), Toast.LENGTH_SHORT).show();
+                        }
+                        else
+                        {
+                            XActivityindicator.showToast("");
+                        }
+                        res.onError(e);
+
+                    }
+
+                    @Override
+                    public void onNext(Boolean aBoolean) {
+                        res.onSuccess(aBoolean);
+                    }
+                });
+
+    }
+
+
+    public static <T> void HandleBool(Observable<HttpResult<T>> obj, String success, String fail, final OnHttpResult<Result<T>> res) {
+
+        obj
+                .subscribeOn(Schedulers.newThread())
+                .observeOn(AndroidSchedulers.mainThread())
+                .map(new HttpResultFuncBoolAndResult<T>(success,fail))
+                .subscribe(new Subscriber<Result<T>>() {
+                    @Override
+                    public void onCompleted() {
+
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        XActivityindicator.hide();
+                        if(debug)
+                        {
+                            e.printStackTrace();
+                            Toast.makeText(ApplicationClass.context, e.toString(), Toast.LENGTH_SHORT).show();
+                        }
+                        else
+                        {
+                            XActivityindicator.showToast("");
+                        }
+                        res.onError(e);
+                    }
+
+                    @Override
+                    public void onNext(Result<T> r) {
+                        res.onSuccess(r);
+                    }
+                });
+
+    }
+
+
+
+    /**
+     * 用来统一处理Http的resultCode,并将HttpResult的Data部分剥离出来返回给subscriber
+     *
+     * @param <T> Subscriber真正需要的数据类型，也就是Data部分的数据类型
+     */
+    private static class HttpResultFunc<T> implements Func1<HttpResult<T>, T> {
+
+        @Override
+        public T call(HttpResult<T> httpResult) {
+            if (httpResult.getStatus() != 1) {
+                String msg = httpResult.getInfo();
+                msg = msg == null ? "加载数据失败" : msg;
+                XActivityindicator.create(ApplicationClass.context).showErrorWithStatus(msg);
+            }
+
+            return httpResult.getData();
+        }
+    }
+
+    private static class HttpResultFuncBool<T> implements Func1<HttpResult<T>, Boolean> {
+
+        private String success = "";
+        private String fail = "";
+
+        public HttpResultFuncBool(String s, String f) {
+
+            this.success = s;
+            this.fail = f;
+        }
+
+        @Override
+        public Boolean call(HttpResult<T> httpResult) {
+
+            XActivityindicator.hide();
+
+            if (httpResult.getStatus() != 1) {
+
+                if(fail != null)
+                {
+                    XActivityindicator.create(ApplicationClass.context).showErrorWithStatus(fail);
+                }
+                else
+                {
+                    String msg = httpResult.getInfo();
+                    msg = msg == null ? "操作失败" : msg;
+                    XActivityindicator.create(ApplicationClass.context).showErrorWithStatus(msg);
+                }
+
+                return false;
+            }
+
+            if(success != null)
+            {
+                String msg = httpResult.getInfo();
+                msg = msg == null ? success : msg;
+                msg = msg.length() == 0 ? success : msg;
+
+                XActivityindicator.create(ApplicationClass.context).showSuccessWithStatus(msg);
+            }
+
+            return true;
+        }
+    }
+
+
+
+    private static class HttpResultFuncBoolAndResult<T> implements Func1<HttpResult<T>, Result<T>> {
+
+        private String success = "";
+        private String fail = "";
+
+        public HttpResultFuncBoolAndResult(String s, String f) {
+
+            this.success = s;
+            this.fail = f;
+        }
+
+        @Override
+        public Result<T> call(HttpResult<T> httpResult) {
+
+            XActivityindicator.hide();
+            Result<T> r = new Result<T>();
+            r.setHttpResult(httpResult);
+
+            if (httpResult.getStatus() != 1) {
+
+                if(fail != null)
+                {
+                    XActivityindicator.create(ApplicationClass.context).showErrorWithStatus(fail);
+                }
+                else
+                {
+                    String msg = httpResult.getInfo();
+                    msg = msg == null ? "操作失败" : msg;
+                    XActivityindicator.create(ApplicationClass.context).showErrorWithStatus(msg);
+                }
+
+                r.setSuccess(false);
+                return r;
+            }
+
+            if(success != null)
+            {
+                XActivityindicator.create(ApplicationClass.context).showSuccessWithStatus(success);
+            }
+
+            r.setSuccess(true);
+            return r;
+        }
+    }
+
+    public static class Result<T>
+    {
+        private boolean success = false;
+        private HttpResult<T> httpResult;
+
+        public boolean isSuccess() {
+            return success;
+        }
+
+        public void setSuccess(boolean success) {
+            this.success = success;
+        }
+
+        public HttpResult<T> getHttpResult() {
+            return httpResult;
+        }
+
+        public void setHttpResult(HttpResult<T> httpResult) {
+            this.httpResult = httpResult;
+        }
+    }
+
+}
